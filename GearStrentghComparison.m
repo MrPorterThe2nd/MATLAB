@@ -6,6 +6,8 @@ Output = zeros(100:17);         %matrix with which the gears will populate
 
 n = 1;
 
+maxTorque = 7.22;   %N/m @ 909RPM
+
 for sheet = 1:5     %all pages
     
     display(sheet);     %show current sheet and read it in
@@ -31,11 +33,36 @@ for sheet = 1:5     %all pages
                 n = n + 1; 
                 
                 stage1.reduction = g1Teeth / p1Teeth;
+                
+                torque2ndShaft = maxTorque*stage1.reduction; %torque applied 
+                
                 stage1.module = Stage1In(row,1);
+                
+                %convert module to diametraL PITCH
+                diametralPitch = 25.4 / stage1.module;
+                
                 stage1.p1Teeth = p1Teeth;
                 stage1.g1Teeth = g1Teeth;
-                stage1.p1D = Stage1In(row,col);
-                stage1.g1D = Stage1In(row,col+1);
+                
+                %stage1.p1D = Stage1In(row,col);
+                %stage1.g1D = Stage1In(row,col+1);
+                
+                %corrected pitch diameter for helical gears
+                
+                stage1.p1D = p1Teeth/diametralPitch;
+                stage1.g1D = g1Teeth/diametralPitch;
+                
+                p1R = stage1.p1D/2;
+                g1R = stage1.g1D/2;
+                
+                addendum = satge1.module;
+                centerDistance = g1R + p1R;
+                
+                helixAngle = 15 * pi/180; %Helix angle 
+                
+                transversePitch = 
+                PitchDiameterP1D = p1Teeth/
+                
                 stage1.p1OD = (p1Teeth + 2) * stage1.module;
                 stage1.g1OD = (g1Teeth + 2) * stage1.module;
                 
@@ -48,7 +75,7 @@ for sheet = 1:5     %all pages
                 Output(n,7) = stage1.p1OD; 
                 Output(n,8) = stage1.g1OD;
                 
-                disp(stage1);
+                %disp(stage1);
                 
             end
             %display(col);

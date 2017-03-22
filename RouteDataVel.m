@@ -33,7 +33,7 @@ while n < 51 %length(MyDirInfo)
     trk = gpxread(MyDirInfo(n+2).name,'FeatureType','Track');
     
     %distance rode make function
-    e = wgs84Ellipsoid;
+    e = wgs84Ellipsoid;         %corrects for earth surface
     lat = trk.Latitude;
     lon = trk.Longitude;
     d = distance(lat(1:end-1), lon(1:end-1), lat(2:end), lon(2:end), e);
