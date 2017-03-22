@@ -44,7 +44,9 @@ for d=1:10000
             zeta(j,i)= -0.25*Re*h*((psi(j,i+1)-psi(j,i-1)))*((zeta(j+1,i)-zeta(j-1,i)))+...
             ((psi(j+1,i)-psi(j-1,i)))*((zeta(j,i+1)-zeta(j,i-1)))+...
             0.25*(zeta(j+1,i)+zeta(j-1,i)+zeta(j,i+1)+zeta(j,i-1)); %zeta Solve
-            psi(j,i)=0.25*(psi(j,i+1)+psi(j,i-1)+psi(j+1,i)+psi(j-1,i)+h*h*zeta(j,i)); %update psi value
+                
+            psi(i,j) = 1/(2*(1/h^2+1/h^2))*(zeta1(i,j)+(psi(i+1,j)+psi(i-1,j))/h^2+(psi(i,j+1) ...
+                        +psi(i,j-1))/h^2);
         end
     end   
 end
