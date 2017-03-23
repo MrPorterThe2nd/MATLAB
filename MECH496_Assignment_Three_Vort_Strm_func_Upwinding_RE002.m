@@ -4,8 +4,8 @@ clf
 clc
 
 %% Inital Parameters
-N=100;  
-M=100; 
+N=51;  
+M=51; 
 h=0.1;
 
 U=1;
@@ -34,7 +34,6 @@ for iteration =1:iteration_max
     % Update stream function(internal nodes)
     for i=2:(N-1)
         for j=2:(M-1)
-            psi_prev(i,j) = psi1(i,j);
             psi1(i,j) = 1/(2*(1/h^2+1/h^2))*(zeta1(i,j)+(psi1(i+1,j)+psi1(i-1,j))/h^2+(psi1(i,j+1) ...
                         +psi1(i,j-1))/h^2);
            
@@ -81,8 +80,7 @@ for iteration =1:iteration_max
              if (psi1(i+1,j)-psi1(i-1,j)) < 0
                 Zy = (zeta1(i,j+1)-zeta1(i,j));
              end
-            
-            zeta_prev(i,j) = zeta1(i,j);
+
             zeta1(i,j) = 0.25*h*h*((zeta1(i+1,j)+zeta1(i-1,j))/(h*h)+(zeta1(i,j+1)+zeta1(i,j-1))/(h*h) ...
                         -Re*(psi1(i,j+1)-psi1(i,j-1))*Zx/(4*h*h)...
                         +Re*(psi1(i+1,j)-psi1(i-1,j))*Zy/(4*h*h));

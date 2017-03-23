@@ -6,7 +6,7 @@ N = 1;      %% y-length
 n = 100;    %% for desired 0.01 step
 h = N/(N*n);    %% x-step 
 k = M/(M*n);    %% y-step
-Re = 1000;         %%Reynolds Number (Increase for Solutions)
+Re = 1;         %%Reynolds Number (Increase for Solutions)
 
 %% Initialize Matrices for Solution
 u = zeros(n*N,n*M);
@@ -44,8 +44,6 @@ for d=1:10000
         for i=2:n-1
             %upwinding coefficients
             
-            psi(j,i)=0.25*(psi(j,i+1)+psi(j,i-1)+psi(j+1,i)+psi(j-1,i)+h*h*zeta(j,i)); %update psi value
-            
             a_ij = (2+h*Re*abs(zeta(j,i))) + (2+k*Re*abs(zeta(j,i)));
             
             if u(j,i) > 0
@@ -64,7 +62,9 @@ for d=1:10000
                 a_jm = 1;
             end
        
-            zeta(j,i)= -1*(a_ip*(zeta(j,i+1)+a_im*zeta(j,i-1)+a_jm*zeta(j-1,i)+a_jp*(zeta(j+1,i)))/(a_ij));
+            zeta(j,i)= (a_ip*(zeta(j,i+1)+a_im*zeta(j,i-1)+a_jm*zeta(j-1,i)+a_jp*(zeta(j+1,i)))/(a_ij));
+            
+            psi(j,i)=0.25*(psi(j,i+1)+psi(j,i-1)+psi(j+1,i)+psi(j-1,i)+h*h*zeta(j,i)); %update psi value
             
         end
     end
